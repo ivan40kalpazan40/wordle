@@ -10,14 +10,14 @@ function App() {
   const [row, setRow] = useState(0);
   const [error, setError] = useState('');
   // state to track if word is five characters long
-  const [isComplete, setIsComplete] = useState(false);
+  const [isComplete, setIsComplete] = useState(guess.length === 5);
   const [isGameOver, setIsGameOver] = useState(false);
   useEffect(() => {
     const keyPressHandler = async (e) => {
       if (isGameOver) return;
       if (e.keyCode === 13) {
         // Enter
-        // if (!isComplete) return;
+        if (!isComplete) return;
 
         // check if is existing word
         const response = await fetch(import.meta.env.VITE_ALL_WORDS);
@@ -42,10 +42,16 @@ function App() {
       }
       if (e.keyCode === 8) {
         // Backspace
+        setGuess(guess.slice(0, -1));
+        return;
       }
       if (e.keyCode < 65 || e.keyCode > 90) return;
 
       // key pressed is letter! Perform setGuess and do additional checks
+      if (!isComplete) {
+        let newGuess = guess + e.key;
+        setGuess(newGuess);
+      }
     };
     window.addEventListener('keydown', keyPressHandler);
     return () => window.removeEventListener('keydown', keyPressHandler);
