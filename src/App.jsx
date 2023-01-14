@@ -8,17 +8,30 @@ function App() {
   const [table, setTable] = useState(Array(6).fill(null));
   const [guess, setGuess] = useState('');
   const [row, setRow] = useState(0);
+  const [error, setError] = useState('');
   // state to track if word is five characters long
   const [isComplete, setIsComplete] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   useEffect(() => {
-    const keyPressHandler = (e) => {
+    const keyPressHandler = async (e) => {
       if (isGameOver) return;
-      if (e.keyCode === 15) {
+      if (e.keyCode === 13) {
         // Enter
-        if (!isComplete) return;
-        if (guess === word) {
-          setIsGameOver(true);
+        // if (!isComplete) return;
+
+        // check if is existing word
+        const response = await fetch(import.meta.env.VITE_ALL_WORDS);
+        const result = await response.json();
+        const isValidWord = result.includes(guess);
+        if (!isValidWord) {
+          setError('Not a valid word');
+        } else {
+          // word is valid!
+
+          // check if word is the one looked after
+          if (guess === word) {
+            setIsGameOver(true);
+          }
         }
       }
       if (e.keyCode === 8) {
