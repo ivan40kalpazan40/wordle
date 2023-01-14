@@ -8,12 +8,18 @@ function App() {
   const [table, setTable] = useState(Array(6).fill(null));
   const [guess, setGuess] = useState('');
   const [row, setRow] = useState(0);
+  // state to track if word is five characters long
+  const [isComplete, setIsComplete] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   useEffect(() => {
     const keyPressHandler = (e) => {
       if (isGameOver) return;
       if (e.keyCode === 15) {
         // Enter
+        if (!isComplete) return;
+        if (guess === word) {
+          setIsGameOver(true);
+        }
       }
       if (e.keyCode === 8) {
         // Backspace
