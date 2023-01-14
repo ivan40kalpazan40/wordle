@@ -4,6 +4,18 @@ import './App.css';
 function App() {
   const effectRan = useRef(false);
   const [word, setWord] = useState('');
+  const [table, setTable] = useState(Array(6).fill(null));
+  const [guess, setGuess] = useState('');
+  const [row, setRow] = useState(0);
+  const [isGameOver, setIsGameOver] = useState(false);
+  useEffect(() => {
+    const keyPressHandler = (e) => {
+      console.log(e.keyCode);
+    };
+    window.addEventListener('keydown', keyPressHandler);
+    return () => window.removeEventListener('keydown', keyPressHandler);
+  }, []);
+
   useEffect(() => {
     if (effectRan.current === false) {
       fetch(import.meta.env.VITE_RANDOM_WORD)
@@ -12,7 +24,15 @@ function App() {
     }
     return () => (effectRan.current = true);
   }, []);
-  return <div className="App">{word}</div>;
+  return (
+    <div className="gameplay">
+      <div className="table">
+        {table.map((line, i) => {
+          return <div key={i}>{i}current line</div>;
+        })}
+      </div>
+    </div>
+  );
 }
 
 export default App;
