@@ -25,19 +25,27 @@ function App() {
         const isValidWord = result.includes(guess);
         if (!isValidWord) {
           setError('Not a valid word');
-        } else {
-          // word is valid!
+          return;
+        }
 
-          // check if word is the one looked after
-          if (guess === word) {
-            setIsGameOver(true);
-          }
+        // word is valid!
+        // check if word is the one looked after
+        if (guess === word) {
+          setRow((oldRow) => oldRow + 1);
+          const helperTable = [...table];
+          helperTable[row] = guess;
+          setTable(helperTable);
+          setGuess('');
+          setIsGameOver(true);
+          return;
         }
       }
       if (e.keyCode === 8) {
         // Backspace
       }
       if (e.keyCode < 65 || e.keyCode > 90) return;
+
+      // key pressed is letter! Perform setGuess and do additional checks
     };
     window.addEventListener('keydown', keyPressHandler);
     return () => window.removeEventListener('keydown', keyPressHandler);
