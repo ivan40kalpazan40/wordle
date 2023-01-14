@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import Row from './components/Row';
 import './App.css';
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
     <div className="gameplay">
       <div className="table">
         {table.map((line, i) => {
-          return <div key={i}>{i}current line</div>;
+          return <Row key={i} line={row === i ? guess : line ?? ''} />;
         })}
       </div>
     </div>
