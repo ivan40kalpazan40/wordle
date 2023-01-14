@@ -10,7 +10,14 @@ function App() {
   const [isGameOver, setIsGameOver] = useState(false);
   useEffect(() => {
     const keyPressHandler = (e) => {
-      console.log(e.keyCode);
+      if (isGameOver) return;
+      if (e.keyCode === 15) {
+        // Enter
+      }
+      if (e.keyCode === 8) {
+        // Backspace
+      }
+      if (e.keyCode < 65 || e.keyCode > 90) return;
     };
     window.addEventListener('keydown', keyPressHandler);
     return () => window.removeEventListener('keydown', keyPressHandler);
