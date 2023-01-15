@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Row from './components/Row';
+import Keypad from './components/Keypad';
+import { alphabetConstructor } from './utils/util';
 import './App.css';
 
 function App() {
@@ -9,8 +11,7 @@ function App() {
   const [guess, setGuess] = useState('');
   const [row, setRow] = useState(0);
   const [error, setError] = useState('');
-  // state to track if word is five characters long
-  // const [isComplete, setIsComplete] = useState(guess.length === 5);
+  const [keyPad, setKeyPad] = useState(alphabetConstructor());
   const [isGameOver, setIsGameOver] = useState(false);
   useEffect(() => {
     const keyPressHandler = async (e) => {
@@ -27,7 +28,20 @@ function App() {
           setError('Not a valid word');
           return;
         }
-
+        for (let i = 0; i < guess.length; i++) {
+          let found = keyPad.find(
+            (x) => x.letter.toLowerCase() === guess[i].toLowerCase()
+          );
+          if (word.includes(guess[i])) {
+            if (word[i] === guess[i]) {
+              found.status = 'correctlyGuessed';
+            } else {
+              found.status = 'closeGuessed';
+            }
+          } else {
+            found.status = 'wrongGuessed';
+          }
+        }
         // word is valid!
         // check if word is the one looked after
         if (guess === word) {
@@ -79,11 +93,27 @@ function App() {
     <div className="gameplay">
       <div className="table">
         {table.map((line, i) => {
-          return <Row key={i} line={row === i ? guess : line ?? ''} />;
+          return (
+            <Row
+              key={i}
+              line={row === i ? guess : line ?? ''}
+              word={word}
+              isEntered={row !== i && line !== null}
+            />
+          );
         })}
       </div>
+      <Keypad keyPad={keyPad} />
     </div>
   );
 }
 
 export default App;
+
+// TODO:
+// AUTH
+// GAME DISTRIBUTION STATISTICS, POINTS, SCORES
+// DICTIONARY - EXPLAIN THE WORD IN SEARCH
+// EFFECTS - TILE SHAKE, ETC.
+// NOTIFICATIONS
+// ....
