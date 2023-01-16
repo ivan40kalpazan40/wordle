@@ -4,7 +4,6 @@ const Row = ({ line, word, isEntered }) => {
     let className = 'tile';
     let char = line[i];
     if (isEntered) {
-      // TODO: Not always register the correctly guessed letter. Address the issue
       if (char === word[i]) {
         className += ' correct';
       } else if (word.includes(char)) {
