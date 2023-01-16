@@ -1,7 +1,7 @@
 const Row = ({ line, word, isEntered }) => {
   const singleLine = [];
-  let className = 'tile';
   for (let i = 0; i < 5; i++) {
+    let className = 'tile';
     let char = line[i];
     if (isEntered) {
       // TODO: Not always register the correctly guessed letter. Address the issue
