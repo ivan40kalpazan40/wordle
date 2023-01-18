@@ -36,7 +36,10 @@ function App() {
             if (word[i] === guess[i]) {
               found.status = 'correctlyGuessed';
             } else {
-              found.status = 'closeGuessed';
+              found.status =
+                found.status === 'correctlyGuessed'
+                  ? 'correctlyGuessed'
+                  : 'closeGuessed';
             }
           } else {
             found.status = 'wrongGuessed';
