@@ -10,7 +10,7 @@ function App() {
   const [table, setTable] = useState(Array(6).fill(null));
   const [guess, setGuess] = useState('');
   const [row, setRow] = useState(0);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null);
   const [keyPad, setKeyPad] = useState(alphabetConstructor());
   const [isGameOver, setIsGameOver] = useState(false);
   useEffect(() => {
@@ -26,6 +26,9 @@ function App() {
         const isValidWord = result.includes(guess);
         if (!isValidWord) {
           setError('Not a valid word');
+          setTimeout(() => {
+            setError(null);
+          }, 3500);
           return;
         }
         for (let i = 0; i < guess.length; i++) {
@@ -105,6 +108,10 @@ function App() {
             />
           );
         })}
+        <p className={isGameOver ? 'success' : error ? 'error' : ''}>
+          {' '}
+          {isGameOver ? 'SUCCESS' : error ? error : ''}
+        </p>
       </div>
       <Keypad keyPad={keyPad} />
     </div>

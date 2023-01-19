@@ -61,7 +61,14 @@ body {
   background-color: #787c7f;
 }
 
+.success {
+  margin-top: 1rem;
+  color: white;
+  background-color: #6ca965;
+  padding: 10px 15px;
+}
 .error {
+  margin-top: 1rem;
   color: white;
   background-color: lightcoral;
   padding: 10px 15px;
